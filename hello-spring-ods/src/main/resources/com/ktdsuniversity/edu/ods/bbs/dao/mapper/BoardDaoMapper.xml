@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ktdsuniversity.edu.ods.bbs.dao.BoardDAO">
+
+    <select id="selectBoardList" parameterType="map" resultType="com.ktdsuniversity.edu.ods.bbs.vo.BoardVO">
+        SELECT ID,
+               SUBJECT,
+               CONTENT,
+               EMAIL,
+               VIEW_CNT,
+               CRT_DT,
+               MDFY_DT,
+               FILE_NAME,
+               ORIGIN_FILE_NAME 
+        FROM BOARD 
+        ORDER BY ID DESC
+    </select>
+    
+    <select id="countBoardList" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM BOARD
+    </select>
+    
+    <select id="selectBoardById" parameterType="long" resultType="com.ktdsuniversity.edu.ods.bbs.vo.BoardVO">
+        SELECT * FROM BOARD WHERE ID = #{id}
+    </select>
+    
+    <insert id="insertBoard" parameterType="com.ktdsuniversity.edu.ods.bbs.vo.BoardVO">
+        INSERT INTO BOARD (
+            ID, SUBJECT, CONTENT, EMAIL, VIEW_CNT, CRT_DT, MDFY_DT, FILE_NAME, ORIGIN_FILE_NAME
+        )
+        VALUES (
+            SPRING_BOOT.SEQ_BOARD_PK.NEXTVAL, #{subject}, #{content}, #{email}, #{viewCnt}, SYSDATE, SYSDATE, #{fileName}, #{originFileName}
+        )
+    </insert>
+    
+    <update id="updateBoard" parameterType="com.ktdsuniversity.edu.ods.bbs.vo.BoardVO">
+        UPDATE BOARD
+        SET SUBJECT = #{subject},
+            CONTENT = #{content},
+            EMAIL = #{email},
+            MDFY_DT = SYSDATE,
+            FILE_NAME = #{fileName},
+            ORIGIN_FILE_NAME = #{originFileName}
+        WHERE ID = #{id}
+    </update>
+    
+    <delete id="deleteBoard" parameterType="long">
+        DELETE FROM BOARD WHERE ID = #{id}
+    </delete>
+    
+    
+    <update id="incrementViewCount" parameterType="long">
+        UPDATE BOARD
+        SET VIEW_CNT = NVL(VIEW_CNT, 0) + 1
+        WHERE ID = #{id}
+    </update>
+    
+</mapper>

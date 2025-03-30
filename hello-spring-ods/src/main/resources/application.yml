@@ -1,0 +1,25 @@
+#spring.application.name=hello-spring
+
+spring:
+  application:
+    name: hello-spring-ods
+
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/XE
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: SPRING_BOOT
+    password: dhehdskan5
+
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+#logging:
+#  level:
+#    root: debug
+
+
+mybatis:
+  mapper-locations: classpath*:com/ktdsuniversity/edu/ods/**/dao/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
